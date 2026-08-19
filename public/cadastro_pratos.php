@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $categoria = $_POST["categoria"];
     $sql_insert = "INSERT INTO pratos (nome_pratos, descrição_pratos, preço_pratos, categoria_pratos)VALUES ('$nome', '$descricao', '$preco', '$categoria')";
 
-    $conexao ->query ($sql_insert);
+    $conexao->query($sql_insert);
 }
 
 $sql_select = "SELECT * FROM pratos";
@@ -35,6 +35,15 @@ $resultado = mysqli_query($conexao, $sql_select);
     <header></header>
 
     <form method="POST">
+        <label for="id_usuario">Usuário responsável</label>
+        <select name="id_usuario" id="id_usuario" class="form-select" required>
+            <option value="">Selecione um usuário...</option>
+            <?php while ($usuario = mysqli_fetch_assoc($usuario)) { ?>
+                <option value="<?php echo $usuario['id_usuario']; ?>">
+                    <?php echo $usuario['nome_usuario']; ?>
+                </option>
+            <?php } ?>
+        </select>
         <label for="usuario">nome prato:</label>
         <input type="text" name="nome_prato">
         <br>
@@ -60,15 +69,15 @@ $resultado = mysqli_query($conexao, $sql_select);
         </tr>
 
         <?php while ($prato = mysqli_fetch_assoc($resultado)) { ?>
-                <tr>
-                    <td><?php echo $prato['id_pratos']; ?></td>
-                    <td><?php echo $prato['nome_pratos']; ?></td>
-                    <td><?php echo $prato['descrição_pratos']; ?></td>
-                    <td>R$ <?php echo $prato['preço_pratos']; ?></td>
-                    <td><?php echo $prato['categoria_pratos']; ?></td>
-                </tr>
+            <tr>
+                <td><?php echo $prato['id_pratos']; ?></td>
+                <td><?php echo $prato['nome_pratos']; ?></td>
+                <td><?php echo $prato['descrição_pratos']; ?></td>
+                <td>R$ <?php echo $prato['preço_pratos']; ?></td>
+                <td><?php echo $prato['categoria_pratos']; ?></td>
+            </tr>
 
-            <?php } ?>
+        <?php } ?>
 
     </table>
 
