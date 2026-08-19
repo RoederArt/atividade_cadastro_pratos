@@ -7,7 +7,7 @@ include("infra/connect.php");
 if($_SERVER['REQUEST_METHOD']=="POST"){
     $usuario = $_POST["usuario"];
     $email = $_POST["email"];
-    $sql = "SELECT*FROM usuarios WHERE nome_usuario = '$usuario' AND email = '$email'";
+    $sql = "SELECT*FROM usuarios WHERE nome_usuario = '$usuario' AND email_usuario = '$email'";
     $resultado = $conexao -> query($sql);
     if ($resultado -> num_rows > 0){
         $erro = "usuario ja cadastrado";
@@ -33,7 +33,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cadastro_pratos</title>
+    <title>cadastro_usuarios</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -49,14 +49,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         <br>
         <button type="submit">Cadastrar</button>
 </form>
-<h2>usuarios cadastrados</h2>
-<table>
-        <tr>
-        <th>ID</th>
-        <th>usuario</th>
-        <th>email</th>
-</tr>
-</table>
+
     
 </body>
 </html>
