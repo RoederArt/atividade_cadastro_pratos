@@ -34,21 +34,13 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cadastro_usuarios</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header></header>
 
-<form method="POST">
-        <label for="usuario">usuario:</label>
-        <input type="text" name="usuario">
-        <br>
-        <label for="email">email:</label>
-        <input type="text" name="email">
-        <br>
-        <button type="submit">Cadastrar</button>
-</form>
-    
+<h1>
+<a href="public/cadastro_pratos.php">CADASTRO PRATOS</a>
+</h1>
 </body>
 </html>
