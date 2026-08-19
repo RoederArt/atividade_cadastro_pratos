@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $erro = "usuario ja cadastrado";
     }else{
 
-        $sql = "INSERT INTO usuarios (nome_usuario, email)VALUES ($usuario $email)";
+        $sql = "INSERT INTO usuarios (nome_usuario, email_usuario) VALUES ('$usuario', '$email')";
 
         if($conexao-> query($sql)){
             $_SESSION['usuario'] = $usuario;
@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
 <header></header>
 
-<form action="public/cadastrar.php" method="POST">
+<form method="POST">
         <label for="usuario">usuario:</label>
         <input type="text" name="usuario">
         <br>
@@ -49,7 +49,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         <br>
         <button type="submit">Cadastrar</button>
 </form>
-
     
 </body>
 </html>
