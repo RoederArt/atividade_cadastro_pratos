@@ -10,12 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $descricao = $_POST["descricao"];
     $preco = $_POST["preco"];
     $categoria = $_POST["categoria"];
-    $sql = "INSERT INTO pratos (nome_pratos, descrição_pratos, preço_pratos, categoria_pratos)VALUES ('$nome', '$descricao', '$preco', '$categoria')";
+    $sql_insert = "INSERT INTO pratos (nome_pratos, descrição_pratos, preço_pratos, categoria_pratos)VALUES ('$nome', '$descricao', '$preco', '$categoria')";
 
-    if ($conexao->query($sql)) {
+    $conexao ->query ($sql_insert);
+}
 
-}
-}
+$sql_select = "SELECT * FROM pratos";
+$resultado = mysqli_query($conexao, $sql_select);
 
 ?>
 
@@ -57,6 +58,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <th>preço</th>
             <th>categoria</th>
         </tr>
+
+        <?php while ($prato = mysqli_fetch_assoc($resultado)) { ?>
+                <tr>
+                    <td><?php echo $prato['id_pratos']; ?></td>
+                    <td><?php echo $prato['nome_pratos']; ?></td>
+                    <td><?php echo $prato['descrição_pratos']; ?></td>
+                    <td>R$ <?php echo $prato['preço_pratos']; ?></td>
+                    <td><?php echo $prato['categoria_pratos']; ?></td>
+                </tr>
+
+            <?php } ?>
+
     </table>
 
 </body>

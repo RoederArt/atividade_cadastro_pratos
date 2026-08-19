@@ -2,10 +2,10 @@
 
 $host = "localhost";
 $usuario = "root";
-$senha = "";
+$senha = "ROOT";
 $banco = "cadastro_pratos";
 
-$conexao = new mysqli($host, $usuario, $senha, $banco, 3307);
+$conexao = new mysqli($host, $usuario, $senha, $banco);
 
 if ($conexao->connect_error) {
     die("Erro na conexão com o banco: " . $conexao->connect_error);
