@@ -7,9 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $usuario = $_POST["usuario"];
     $email = $_POST["email"];
 
-    $sql = "INSERT INTO usuarios (nome_usuario, email_usuario) VALUES ('$usuario', '$email')";
+    $sql = "INSERT INTO usuarios (nome_usuario, email_usuario) VALUES ( ?, ?)";
+    $comando = $conexao->prepare($sql);
+    $comando->bind_param("ss", $usuario, $email);
+    $comando->execute();
 
-    mysqli_query($conexao, $sql);
 }
 
 $sql_select = "SELECT * FROM usuarios";

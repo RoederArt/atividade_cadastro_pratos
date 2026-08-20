@@ -1,15 +1,15 @@
-<?php
+<?php 
 
-$host = "localhost";
-$usuario = "root";
-$senha = "ROOT";
-$banco = "cadastro_pratos";
+$host = "localhost"; 
+$usuario = "root"; 
+$senha = ""; 
+$banco = "cadastro_pratos"; 
 
-$conexao = new mysqli($host, $usuario, $senha, $banco);
+$conexao = new mysqli($host, $usuario, $senha, $banco, 3306); 
 
-if ($conexao->connect_error) {
-    die("Erro na conexão com o banco: " . $conexao->connect_error);
-};
+if ($conexao->connect_error) { 
+    die("Erro na conexão com o banco: " . $conexao->connect_error); 
+}
 
 $conexao->set_charset("utf8mb4");
 

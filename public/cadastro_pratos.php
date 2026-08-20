@@ -10,18 +10,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $descricao = $_POST["descricao"];
     $preco = $_POST["preco"];
     $categoria = $_POST["categoria"];
-    $sql_insert = "INSERT INTO pratos (nome_pratos, descrição_pratos, preço_pratos, categoria_pratos)VALUES ('$nome', '$descricao', '$preco', '$categoria')";
+    $id_usuario = $_POST["id_usuario"];
 
-    $conexao->query($sql_insert);
+    $sql_insert = "INSERT INTO pratos (nome_pratos, descrição_pratos, preço_pratos, categoria_pratos, id_usuario) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conexao->prepare($sql_insert);
+    $stmt->bind_param("ssdsi", $nome, $descricao, $preco, $categoria, $id_usuario);
+    $stmt->execute();
+    $stmt->close();
 }
 
 $sql_select = "SELECT * FROM pratos";
 $resultado = mysqli_query($conexao, $sql_select);
 
+$sql_select_usuario = "SELECT * FROM usuarios";
+$usuarios = mysqli_query($conexao, $sql_select_usuario);
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="Br">
 
 <head>
     <meta charset="UTF-8">
@@ -38,23 +45,24 @@ $resultado = mysqli_query($conexao, $sql_select);
         <label for="id_usuario">Usuário responsável</label>
         <select name="id_usuario" id="id_usuario" class="form-select" required>
             <option value="">Selecione um usuário...</option>
-            <?php while ($usuario = mysqli_fetch_assoc($usuario)) { ?>
+            <?php while ($usuario = mysqli_fetch_assoc($usuarios)) { ?>
                 <option value="<?php echo $usuario['id_usuario']; ?>">
                     <?php echo $usuario['nome_usuario']; ?>
                 </option>
             <?php } ?>
         </select>
-        <label for="usuario">nome prato:</label>
-        <input type="text" name="nome_prato">
         <br>
-        <label for="email">desrição:</label>
-        <input type="text" name="descricao">
+        <label for="nome_prato">nome prato:</label>
+        <input type="text" name="nome_prato" required>
         <br>
-        <label for="email">preço:</label>
-        <input type="text" name="preco">
+        <label for="descricao">descrição:</label>
+        <input type="text" name="descricao" required>
         <br>
-        <label for="email">categoria:</label>
-        <input type="text" name="categoria">
+        <label for="preco">preço:</label>
+        <input type="text" name="preco" required>
+        <br>
+        <label for="categoria">categoria:</label>
+        <input type="text" name="categoria" required>
         <br>
         <button type="submit">Cadastrar</button>
     </form>
@@ -71,15 +79,22 @@ $resultado = mysqli_query($conexao, $sql_select);
         <?php while ($prato = mysqli_fetch_assoc($resultado)) { ?>
             <tr>
                 <td><?php echo $prato['id_pratos']; ?></td>
-                <td><?php echo $prato['nome_pratos']; ?></td>
-                <td><?php echo $prato['descrição_pratos']; ?></td>
-                <td>R$ <?php echo $prato['preço_pratos']; ?></td>
-                <td><?php echo $prato['categoria_pratos']; ?></td>
-            </tr>
+                <td><?php echo htmlspecialchars($prato['nome_pratos']); ?></td>
+                <td><?php echo htmlspecialchars($prato['descrição_pratos']); ?></td>
+                <td><?php echo htmlspecialchars($prato['preço_pratos']); ?></td>
+                <td><?php echo htmlspecialchars($prato['categoria_pratos']); ?></td>
 
+                <td>
+                  <a href="editar.php?id=<?php echo $prato['id_pratos']; ?>">Editar</a> | 
+                <a href="excluir.php?id=<?php echo $prato['id_pratos']; ?>" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+
+                </td>
+            </tr>
         <?php } ?>
 
     </table>
+
+    <a href="../index.php">VOLTAR</a>
 
 </body>
 

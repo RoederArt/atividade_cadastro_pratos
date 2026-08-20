@@ -1,12 +1,14 @@
 <?php
 
-include("infra/conexao.php");
+include("../infra/conexao.php");
 
-$id_pratos = $_GET["id_pratos"];
-$sql = "DELETE FROM pratos WHERE id_pratos = $id_pratos";
-mysqli_query($conexao,$sql);
+$id_pratos = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
-header("location: ../index.php");
+$sql = "DELETE FROM pratos WHERE id_pratos = ?";
+$comando = $conexao->prepare($sql);
+$comando->bind_param("i", $id_pratos);
+$comando->execute();
+header("location: cadastro_pratos.php");
 
 
 
